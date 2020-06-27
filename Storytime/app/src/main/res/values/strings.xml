@@ -3,4 +3,5 @@
     <string name="contentHomeButton">Home Button</string>
     <string name="contentStatsButton">Stats Button</string>
     <string name="contentSettingsButton">Settings Button</string>
+    <string name="closeButton">Close</string>
 </resources>
