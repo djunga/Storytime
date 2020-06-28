@@ -10,7 +10,7 @@
     android:layout_marginRight="4dp"
     android:layout_marginStart="4dp"
     android:layout_marginTop="4dp"
-    android:background="#D55C1F">
+    android:background="#FF9800">
 
     <ImageView
         android:id="@+id/imageViewPFP"
@@ -26,16 +26,37 @@
         app:layout_constraintVertical_bias="0.272"
         tools:srcCompat="@tools:sample/avatars" />
 
-    <TextView
-        android:id="@+id/textViewName"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Name"
+    <LinearLayout
+        android:layout_width="232dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginRight="4dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.427"
-        app:layout_constraintStart_toEndOf="@+id/imageViewPFP"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewLanguage"
+        app:layout_constraintVertical_bias="0.0">
+
+        <TextView
+            android:id="@+id/textViewNationality"
+            android:layout_width="43dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Nationality" />
+
+        <ImageView
+            android:id="@+id/imageViewFlag"
+            android:layout_width="37dp"
+            android:layout_height="19dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_weight="1"
+            tools:srcCompat="@tools:sample/avatars" />
+
+
+
+    </LinearLayout>
 
     <TextView
         android:id="@+id/textViewAge"
@@ -59,33 +80,15 @@
         app:layout_constraintStart_toEndOf="@+id/imageViewPFP"
         app:layout_constraintTop_toBottomOf="@+id/textViewAge" />
 
-    <LinearLayout
-        android:layout_width="202dp"
-        android:layout_height="45dp"
-        android:layout_marginBottom="16dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginRight="32dp"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <TextView
+        android:id="@+id/textViewName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Name"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewLanguage"
-        app:layout_constraintVertical_bias="1.0">
-
-        <TextView
-            android:id="@+id/textViewNationality"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Nationality"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <ImageView
-            android:id="@+id/imageViewFlag"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            tools:srcCompat="@tools:sample/avatars" />
-    </LinearLayout>
+        app:layout_constraintHorizontal_bias="0.427"
+        app:layout_constraintStart_toEndOf="@+id/imageViewPFP"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
