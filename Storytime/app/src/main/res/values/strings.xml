@@ -4,4 +4,17 @@
     <string name="contentStatsButton">Stats Button</string>
     <string name="contentSettingsButton">Settings Button</string>
     <string name="closeButton">Close</string>
+    <string-array name="countries">
+        <item>Any</item>
+        <item>Lebanon</item>
+        <item>Panama</item>
+        <item>United States</item>
+    </string-array>
+
+    <string-array name="languages">
+        <item>Any</item>
+        <item>Arabic</item>
+        <item>Spanish</item>
+        <item>English</item>
+    </string-array>
 </resources>

@@ -48,10 +48,20 @@
         android:layout_marginTop="16dp"
         app:layout_constraintBottom_toTopOf="@+id/linearLayoutNavBar"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.873"
+        app:layout_constraintHorizontal_bias="0.954"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.029"
+        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/icon_search32" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewSearch"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="#FF9800"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayoutNavBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageButtonSearch" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

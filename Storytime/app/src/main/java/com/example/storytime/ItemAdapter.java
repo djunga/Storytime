@@ -35,14 +35,9 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.EldersViewHold
         }
     }
 
-    public ItemAdapter() {
-        elderArr = new ArrayList<>();
-        Elder farhan = new Elder("Farhan", "Ghafran", 72, "Arabic", "Lebanon");
-        Elder ana = new Elder("Ana", "Lopez", 68, "Spanish", "Panama");
-        Elder tara = new Elder("Tara", "Jackson", 80, "English", "United States");
-        elderArr.add(farhan);
-        elderArr.add(ana);
-        elderArr.add(tara);
+    public ItemAdapter(ArrayList<Elder> list) {
+        elderArr = list;
+
     }
 
     @Override
@@ -55,8 +50,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.EldersViewHold
     @Override
     public void onBindViewHolder(@NonNull EldersViewHolder holder, int position) {
         Elder currentElder = elderArr.get(position);
-        holder.textViewName.setText(currentElder.getFirstName() + currentElder.getLastName());
-        holder.textViewAge.setText(currentElder.getAge());
+        holder.textViewName.setText(currentElder.getFirstName() + " " + currentElder.getLastName());
+        holder.textViewAge.setText(""+currentElder.getAge() + " years old");
         holder.textViewLanguage.setText(currentElder.getLanguage());
         holder.textViewNationality.setText(currentElder.getNationality());
         String fn = currentElder.getFirstName();
