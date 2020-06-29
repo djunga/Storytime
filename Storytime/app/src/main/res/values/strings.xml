@@ -4,6 +4,8 @@
     <string name="contentStatsButton">Stats Button</string>
     <string name="contentSettingsButton">Settings Button</string>
     <string name="closeButton">Close</string>
+    <string name="register">Register</string>
+    <string name="login">Login</string>
     <string-array name="countries">
         <item>Any</item>
         <item>Lebanon</item>
