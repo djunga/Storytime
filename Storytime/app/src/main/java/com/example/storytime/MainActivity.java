@@ -4,16 +4,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.ContentValues;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements SearchDialog.MyListener  {
     private RecyclerView searchRV;
     private RecyclerView.Adapter searchAdapter;
     private SearchDialog searchDialog;
+    public ArrayList<Elder> arr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
         Elder farhan = new Elder("Farhan", "Ghafran", 72, "Arabic", "Lebanon");
         Elder ana = new Elder("Ana", "Lopez", 68, "Spanish", "Panama");
         Elder tara = new Elder("Tara", "Jackson", 80, "English", "United States");
-        ArrayList<Elder> arr = new ArrayList<>();
+        arr = new ArrayList<>();
         arr.add(farhan);
         arr.add(ana);
         arr.add(tara);
@@ -43,5 +45,21 @@ public class MainActivity extends AppCompatActivity {
                 searchDialog.show(getSupportFragmentManager(), "Set up search");
             }
         });
+    }
+
+    @Override
+    public void applyChanges(ContentValues cv) {
+        String language = (String) cv.get("language");
+        ArrayList<Elder> tempArr = new ArrayList<>();
+        for(int i=0; i<arr.size(); i++) {
+            Elder elder = arr.get(i);
+            if(elder.getLanguage().equals(language)) {
+                tempArr.add(elder);
+            }
+        }
+        searchAdapter = new ItemAdapter(tempArr);
+        searchRV.setLayoutManager(new LinearLayoutManager(this));
+        searchRV.setAdapter(searchAdapter);
+
     }
 }

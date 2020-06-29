@@ -20,7 +20,9 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 
 public class SearchDialog extends DialogFragment {
-
+    private MyListener listener;
+    private Spinner spinnerLanguages;
+    private Spinner spinnerNationality;
     public SearchDialog() {
         super();
     }
@@ -36,6 +38,10 @@ public class SearchDialog extends DialogFragment {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
+                spinnerLanguages = view.findViewById(R.id.spinnerLanguages);
+                ContentValues searchCriteria = new ContentValues();
+                searchCriteria.put("language", spinnerLanguages.getSelectedItem().toString());
+                listener.applyChanges(searchCriteria);
 
                 getDialog().dismiss();
             }
@@ -46,6 +52,16 @@ public class SearchDialog extends DialogFragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        try {
+            listener = (MyListener) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString() +
+                    "must implement MyListener");
+        }
+    }
+
+    public interface MyListener {
+        void applyChanges(ContentValues cv);
     }
 
 }
