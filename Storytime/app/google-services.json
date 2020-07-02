@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "845252286062",
+    "firebase_url": "https://storytime-tora.firebaseio.com",
+    "project_id": "storytime-tora",
+    "storage_bucket": "storytime-tora.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:845252286062:android:780534f0a6a1f88c08387f",
+        "android_client_info": {
+          "package_name": "com.example.storytime"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "845252286062-l5a20hjjgksboog569q4g5l3ome27ruk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.storytime",
+            "certificate_hash": "068edf9bd45a4b677e6b7357f4e6bbe267c5dc47"
+          }
+        },
+        {
+          "client_id": "845252286062-lh3no06stkclmd972rj8qkfd04cobodg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAm1Va3__HgvHSsmQeeq-53oMMXmE6KRk8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "845252286062-lh3no06stkclmd972rj8qkfd04cobodg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -44,7 +44,7 @@
         android:inputType="textEmailAddress"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/textViewEmail"
+        app:layout_constraintStart_toEndOf="@+id/textViewRegisterEmail"
         app:layout_constraintTop_toBottomOf="@+id/editTextRegisterName" />
 
     <EditText

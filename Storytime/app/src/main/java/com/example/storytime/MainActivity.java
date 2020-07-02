@@ -11,6 +11,8 @@ import android.widget.ImageButton;
 
 import java.util.ArrayList;
 
+import static android.view.View.GONE;
+
 public class MainActivity extends AppCompatActivity implements SearchDialog.MyListener  {
     private RecyclerView searchRV;
     private RecyclerView.Adapter searchAdapter;
