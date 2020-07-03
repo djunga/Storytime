@@ -16,7 +16,6 @@ public class RegisterLoginScreen extends AppCompatActivity {
 
         initLoginButton();
         initRegisterButton();
-
     }
 
     private void initLoginButton() {
