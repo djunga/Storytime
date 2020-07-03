@@ -1,10 +1,25 @@
 package com.example.storytime;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.content.ContentValues;
+import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.ColorFilter;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,6 +30,17 @@ import java.util.ArrayList;
  * */
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.EldersViewHolder> {
     ArrayList<Elder> elderArr;
+    private OnItemClickListener mListener;
+    private Context context;
+
+    public interface OnItemClickListener {
+        void onFavoriteClick(int position);
+        //void onDeleteClick(int position);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        mListener = listener;
+    }
 
     public class EldersViewHolder extends RecyclerView.ViewHolder {
         public TextView textViewName;
@@ -23,6 +49,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.EldersViewHold
         public TextView textViewNationality;
         public ImageView imageViewPFP;
         public ImageView imageViewFlag;
+        //public ImageButton imageButtonFavorite;
 
         public EldersViewHolder(View itemView) {
             super(itemView);
@@ -32,12 +59,21 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.EldersViewHold
             textViewNationality = itemView.findViewById(R.id.textViewNationality);
             imageViewPFP = itemView.findViewById(R.id.imageViewPFP);
             imageViewFlag = itemView.findViewById(R.id.imageViewFlag);
+            //imageButtonFavorite = itemView.findViewById(R.id.imageButtonFavorite);
+
+//            imageButtonFavorite.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    imageButtonFavorite.setColorFilter(null);
+//                    notifyItemChanged(position);
+//                }
+//            });
         }
     }
 
-    public ItemAdapter(ArrayList<Elder> list) {
+    public ItemAdapter(ArrayList<Elder> list, Context context) {
         elderArr = list;
-
+        this.context = context;
     }
 
     @Override
@@ -49,6 +85,24 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.EldersViewHold
 
     @Override
     public void onBindViewHolder(@NonNull EldersViewHolder holder, int position) {
+        final ImageButton imageButtonFavorite = holder.itemView.findViewById(R.id.imageButtonFavorite);
+        imageButtonFavorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Drawable x = imageButtonFavorite.getDrawable();
+                Bitmap currBit = ((BitmapDrawable)imageButtonFavorite.getDrawable()).getBitmap();
+                Resources res = context.getResources();
+                Drawable fav = res.getDrawable(R.drawable.favorite32);
+                Bitmap favBit = BitmapFactory.decodeResource(context.getResources(), R.drawable.favorite32);
+                if(!favBit.sameAs(currBit)) {
+                    imageButtonFavorite.setImageResource(R.drawable.favorite32);
+                    imageButtonFavorite.setColorFilter(0);
+                }
+                else {
+                    imageButtonFavorite.setImageResource(R.drawable.clearstar32);
+                }
+            }
+        });
         Elder currentElder = elderArr.get(position);
         holder.textViewName.setText(currentElder.getFirstName() + " " + currentElder.getLastName());
         holder.textViewAge.setText(""+currentElder.getAge() + " years old");

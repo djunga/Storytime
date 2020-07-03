@@ -94,4 +94,18 @@
         app:layout_constraintStart_toEndOf="@+id/imageViewPFP"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageButton
+        android:id="@+id/imageButtonFavorite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#00FFFFFF"
+        android:tint="#9BD1EF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.956"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.093"
+        app:srcCompat="@drawable/clearstar32" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -11,13 +11,13 @@ import android.widget.ImageButton;
 
 import java.util.ArrayList;
 
-import static android.view.View.GONE;
-
 public class MainActivity extends AppCompatActivity implements SearchDialog.MyListener  {
     private RecyclerView searchRV;
-    private RecyclerView.Adapter searchAdapter;
+    private static ItemAdapter searchAdapter;
     private SearchDialog searchDialog;
     public ArrayList<Elder> arr;
+    public ArrayList<Elder> favArr;
+    public ArrayList<Elder> searchResultsArr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,12 +31,25 @@ public class MainActivity extends AppCompatActivity implements SearchDialog.MyLi
         Elder ana = new Elder("Ana", "Lopez", 68, "Spanish", "Panama");
         Elder tara = new Elder("Tara", "Jackson", 80, "English", "United States");
         arr = new ArrayList<>();
+        favArr = new ArrayList<>();
 /*        arr.add(farhan);
         arr.add(ana);
         arr.add(tara);*/
-        searchAdapter = new ItemAdapter(arr);
+        searchAdapter = new ItemAdapter(arr, this);
         searchRV.setLayoutManager(new LinearLayoutManager(this));
         searchRV.setAdapter(searchAdapter);
+        ////////
+//        searchAdapter.setOnItemClickListener(new ItemAdapter.OnItemClickListener() {
+//            @Override
+//            public void onFavoriteClick(int position) {
+//                toggleFavorite(position);
+//            }
+//            @Override
+//            public void onDeleteClick(int position) {
+//                removeItem(position);
+//            }
+//        });
+        ///////
     }
 
     private void initSearchButton() {
@@ -48,6 +61,13 @@ public class MainActivity extends AppCompatActivity implements SearchDialog.MyLi
             }
         });
     }
+
+//    private void toggleFavorite(int position) {
+//        Elder elder = searchResultsArr.get(position);
+//
+//        if()
+//        searchAdapter.notifyItemChanged(position);
+//    }
 
     @Override
     public void applyChanges(ContentValues cv) {
@@ -65,7 +85,7 @@ public class MainActivity extends AppCompatActivity implements SearchDialog.MyLi
                 tempArr.add(elder);
             }
         }
-        searchAdapter = new ItemAdapter(tempArr);
+        searchAdapter = new ItemAdapter(tempArr, this);
         searchRV.setLayoutManager(new LinearLayoutManager(this));
         searchRV.setAdapter(searchAdapter);
 
