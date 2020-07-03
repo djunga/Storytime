@@ -31,9 +31,9 @@ public class MainActivity extends AppCompatActivity implements SearchDialog.MyLi
         Elder ana = new Elder("Ana", "Lopez", 68, "Spanish", "Panama");
         Elder tara = new Elder("Tara", "Jackson", 80, "English", "United States");
         arr = new ArrayList<>();
-        arr.add(farhan);
+/*        arr.add(farhan);
         arr.add(ana);
-        arr.add(tara);
+        arr.add(tara);*/
         searchAdapter = new ItemAdapter(arr);
         searchRV.setLayoutManager(new LinearLayoutManager(this));
         searchRV.setAdapter(searchAdapter);
@@ -51,6 +51,12 @@ public class MainActivity extends AppCompatActivity implements SearchDialog.MyLi
 
     @Override
     public void applyChanges(ContentValues cv) {
+        Elder farhan = new Elder("Farhan", "Ghafran", 72, "Arabic", "Lebanon");
+        Elder ana = new Elder("Ana", "Lopez", 68, "Spanish", "Panama");
+        Elder tara = new Elder("Tara", "Jackson", 80, "English", "United States");
+        arr.add(farhan);
+        arr.add(ana);
+        arr.add(tara);
         String language = (String) cv.get("language");
         ArrayList<Elder> tempArr = new ArrayList<>();
         for(int i=0; i<arr.size(); i++) {

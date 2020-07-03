@@ -141,6 +141,9 @@ public class LoginActivity extends AppCompatActivity {
     private void updateUI(FirebaseUser currentUser) {
         if(currentUser != null) {
             loginEmail.setText("Login was successful.");
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
         }
     }
 }
