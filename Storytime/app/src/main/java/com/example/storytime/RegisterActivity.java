@@ -35,10 +35,10 @@ import com.google.firebase.auth.FirebaseUser;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class RegisterActivity extends AppCompatActivity {
-    private EditText registerName = findViewById(R.id.editTextRegisterName);
-    private EditText registerEmail = findViewById(R.id.editTextRegisterEmail);
-    private EditText registerPassword = findViewById(R.id.editTextRegisterPassword);
-    private EditText registerConfirmPassword = findViewById(R.id.editTextRegisterConfirmPassword);
+    private EditText registerName;
+    private EditText registerEmail;
+    private EditText registerPassword;
+    private EditText registerConfirmPassword;
 
     private static final String TAG = "EmailPassword";
     private FirebaseAuth mAuth;
@@ -55,6 +55,10 @@ public class RegisterActivity extends AppCompatActivity {
 
         initRegisterScreenButton();
 
+        // [START initialize_auth]
+        // Initialize Firebase Auth
+        mAuth = FirebaseAuth.getInstance();
+        // [END initialize_auth]
     }
 
     private void initRegisterScreenButton() {
@@ -202,8 +206,9 @@ private void createAccount(String email, String password) {
     }
 
     private void updateUI(FirebaseUser currentUser) {
-        registerEmail.setText("Register was successful.");
-
+        if(currentUser != null) {
+            registerEmail.setText("Register was successful.");
+        }
     }
 
 

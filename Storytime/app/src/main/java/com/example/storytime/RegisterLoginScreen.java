@@ -22,6 +22,8 @@ public class RegisterLoginScreen extends AppCompatActivity {
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(RegisterLoginScreen.this, LoginActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
             }
         });
     }
@@ -30,6 +32,8 @@ public class RegisterLoginScreen extends AppCompatActivity {
         buttonRegister.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(RegisterLoginScreen.this, RegisterActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
             }
         });
     }
