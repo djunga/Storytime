@@ -79,10 +79,16 @@ public class MainActivity extends AppCompatActivity implements SearchDialog.MyLi
         arr.add(tara);
         String language = (String) cv.get("language");
         ArrayList<Elder> tempArr = new ArrayList<>();
-        for(int i=0; i<arr.size(); i++) {
-            Elder elder = arr.get(i);
-            if(elder.getLanguage().equals(language)) {
-                tempArr.add(elder);
+
+        if(language.equals("Any")) {
+            tempArr = arr;
+        }
+        else {
+            for(int i=0; i<arr.size(); i++) {
+                Elder elder = arr.get(i);
+                if(elder.getLanguage().equals(language)) {
+                    tempArr.add(elder);
+                }
             }
         }
         searchAdapter = new ItemAdapter(tempArr, this);

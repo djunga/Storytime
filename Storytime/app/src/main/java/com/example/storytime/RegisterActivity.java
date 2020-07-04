@@ -30,7 +30,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 
+
+import java.util.HashMap;
+import java.util.Map;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -42,6 +46,8 @@ public class RegisterActivity extends AppCompatActivity {
 
     private static final String TAG = "EmailPassword";
     private FirebaseAuth mAuth;
+    private FirebaseFirestore db;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +64,7 @@ public class RegisterActivity extends AppCompatActivity {
         // [START initialize_auth]
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
         // [END initialize_auth]
     }
 
@@ -100,6 +107,13 @@ private void createAccount(String email, String password) {
                         // Sign in success, update UI with the signed-in user's information
                         Log.d(TAG, "createUserWithEmail:success");
                         FirebaseUser user = mAuth.getCurrentUser();
+                        String newUserUID = user.getUid();
+
+                        Map<String, String> data = new HashMap<>();
+                        data.put("name", registerName.getText().toString());
+                        data.put("email", registerEmail.getText().toString());
+                        data.put("password", registerPassword.getText().toString());
+                        db.collection("users").document(newUserUID).set(data);
                         updateUI(user);
                     } else {
                         // If sign in fails, display a message to the user.
@@ -135,6 +149,7 @@ private void createAccount(String email, String password) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
+                            String x = user.getUid();
                             updateUI(user);
                         } else {
                             // If sign in fails, display a message to the user.
