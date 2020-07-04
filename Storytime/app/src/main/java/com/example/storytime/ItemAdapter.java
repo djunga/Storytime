@@ -1,29 +1,32 @@
 package com.example.storytime;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.graphics.ColorFilter;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FieldValue;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /* These classes were modeled based on code from the textbook for the course.
  * We need an Adapter and a ViewHolder to respond when an item in the RecyclerView is clicked.
@@ -32,10 +35,11 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.EldersViewHold
     ArrayList<Elder> elderArr;
     private OnItemClickListener mListener;
     private Context context;
+    private FirebaseAuth mAuth;
+    private FirebaseFirestore db;
 
     public interface OnItemClickListener {
         void onFavoriteClick(int position);
-        //void onDeleteClick(int position);
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {
@@ -49,7 +53,6 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.EldersViewHold
         public TextView textViewNationality;
         public ImageView imageViewPFP;
         public ImageView imageViewFlag;
-        //public ImageButton imageButtonFavorite;
 
         public EldersViewHolder(View itemView) {
             super(itemView);
@@ -59,15 +62,6 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.EldersViewHold
             textViewNationality = itemView.findViewById(R.id.textViewNationality);
             imageViewPFP = itemView.findViewById(R.id.imageViewPFP);
             imageViewFlag = itemView.findViewById(R.id.imageViewFlag);
-            //imageButtonFavorite = itemView.findViewById(R.id.imageButtonFavorite);
-
-//            imageButtonFavorite.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    imageButtonFavorite.setColorFilter(null);
-//                    notifyItemChanged(position);
-//                }
-//            });
         }
     }
 
@@ -86,6 +80,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.EldersViewHold
     @Override
     public void onBindViewHolder(@NonNull EldersViewHolder holder, int position) {
         final ImageButton imageButtonFavorite = holder.itemView.findViewById(R.id.imageButtonFavorite);
+        final int mPosition = position;
         imageButtonFavorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -97,10 +92,13 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.EldersViewHold
                 if(!favBit.sameAs(currBit)) {
                     imageButtonFavorite.setImageResource(R.drawable.favorite32);
                     imageButtonFavorite.setColorFilter(0);
+                    Elder currentElder = elderArr.get(mPosition);
+                    addToFavorites(currentElder);
                 }
                 else {
                     imageButtonFavorite.setImageResource(R.drawable.clearstar32);
                 }
+
             }
         });
         Elder currentElder = elderArr.get(position);
@@ -122,6 +120,13 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.EldersViewHold
             holder.imageViewFlag.setImageResource(R.drawable.unitedstates32);
         }
 
+    }
+
+    public void addToFavorites(Elder elder) {
+        mAuth = FirebaseAuth.getInstance();
+        String uid = mAuth.getUid();
+        db = FirebaseFirestore.getInstance();
+        db.collection("users").document(uid).update("favorites", FieldValue.arrayUnion(elder));
     }
 
     @Override

@@ -62,13 +62,6 @@ public class MainActivity extends AppCompatActivity implements SearchDialog.MyLi
         });
     }
 
-//    private void toggleFavorite(int position) {
-//        Elder elder = searchResultsArr.get(position);
-//
-//        if()
-//        searchAdapter.notifyItemChanged(position);
-//    }
-
     @Override
     public void applyChanges(ContentValues cv) {
         Elder farhan = new Elder("Farhan", "Ghafran", 72, "Arabic", "Lebanon");

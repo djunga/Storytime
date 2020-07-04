@@ -1,5 +1,6 @@
 package com.example.storytime;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -33,6 +34,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -114,6 +116,17 @@ private void createAccount(String email, String password) {
                         data.put("email", registerEmail.getText().toString());
                         data.put("password", registerPassword.getText().toString());
                         db.collection("users").document(newUserUID).set(data);
+
+                        ArrayList<Elder> favArr = new ArrayList<>();
+                        Elder testElder = new Elder("Derrik", "Lamb", 77, "Urdu", "Pakistan");
+                        //favArr.add(testElder);
+//                        Map<String, Object> favData = new HashMap<>();
+//                        favData.put("favorites", favArr);
+
+                        db.collection("users").document(newUserUID)
+                                .update(
+                                        "favorites", favArr
+                                );
                         updateUI(user);
                     } else {
                         // If sign in fails, display a message to the user.
@@ -131,72 +144,6 @@ private void createAccount(String email, String password) {
     // [END create_user_with_email]
 }
 
-
-    private void signIn(String email, String password) {
-        Log.d(TAG, "signIn:" + email);
-        if (!validateForm()) {
-            return;
-        }
-
-        //showProgressBar();
-
-        // [START sign_in_with_email]
-        mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "signInWithEmail:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            String x = user.getUid();
-                            updateUI(user);
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w(TAG, "signInWithEmail:failure", task.getException());
-                            Toast.makeText(RegisterActivity.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
-                            updateUI(null);
-                            // [START_EXCLUDE]
-                            //checkForMultiFactorFailure(task.getException());
-                            // [END_EXCLUDE]
-                        }
-
-                        // [START_EXCLUDE]
-                        if (!task.isSuccessful()) {
-                            //mBinding.status.setText(R.string.auth_failed);
-
-                        }
-                        //hideProgressBar();
-                        // [END_EXCLUDE]
-                    }
-                });
-        // [END sign_in_with_email]
-    }
-
-    private void signOut() {
-        mAuth.signOut();
-        updateUI(null);
-    }
-
-    private void reload() {
-        mAuth.getCurrentUser().reload().addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()) {
-                    updateUI(mAuth.getCurrentUser());
-                    Toast.makeText(RegisterActivity.this,
-                            "Reload successful!",
-                            Toast.LENGTH_SHORT).show();
-                } else {
-                    Log.e(TAG, "reload", task.getException());
-                    Toast.makeText(RegisterActivity.this,
-                            "Failed to reload user.",
-                            Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-    }
 
     private boolean validateForm() {
         boolean valid = true;
@@ -223,8 +170,9 @@ private void createAccount(String email, String password) {
     private void updateUI(FirebaseUser currentUser) {
         if(currentUser != null) {
             registerEmail.setText("Register was successful.");
+            Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
         }
     }
-
-
 }
