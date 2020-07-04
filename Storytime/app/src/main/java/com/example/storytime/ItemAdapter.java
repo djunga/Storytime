@@ -89,14 +89,15 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.EldersViewHold
                 Resources res = context.getResources();
                 Drawable fav = res.getDrawable(R.drawable.favorite32);
                 Bitmap favBit = BitmapFactory.decodeResource(context.getResources(), R.drawable.favorite32);
+                Elder currentElder = elderArr.get(mPosition);
                 if(!favBit.sameAs(currBit)) {
                     imageButtonFavorite.setImageResource(R.drawable.favorite32);
                     imageButtonFavorite.setColorFilter(0);
-                    Elder currentElder = elderArr.get(mPosition);
                     addToFavorites(currentElder);
                 }
                 else {
                     imageButtonFavorite.setImageResource(R.drawable.clearstar32);
+                    removeFromFavorites(currentElder);
                 }
 
             }
@@ -127,6 +128,12 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.EldersViewHold
         String uid = mAuth.getUid();
         db = FirebaseFirestore.getInstance();
         db.collection("users").document(uid).update("favorites", FieldValue.arrayUnion(elder));
+    }
+    public void removeFromFavorites(Elder elder) {
+        mAuth = FirebaseAuth.getInstance();
+        String uid = mAuth.getUid();
+        db = FirebaseFirestore.getInstance();
+        db.collection("users").document(uid).update("favorites", FieldValue.arrayRemove(elder));
     }
 
     @Override

@@ -18,6 +18,7 @@ public class MainActivity extends AppCompatActivity implements SearchDialog.MyLi
     public ArrayList<Elder> arr;
     public ArrayList<Elder> favArr;
     public ArrayList<Elder> searchResultsArr;
+    static boolean firstLoad = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,29 +28,17 @@ public class MainActivity extends AppCompatActivity implements SearchDialog.MyLi
         initSearchButton();
 
         searchRV = findViewById(R.id.recyclerViewSearch);
-        Elder farhan = new Elder("Farhan", "Ghafran", 72, "Arabic", "Lebanon");
-        Elder ana = new Elder("Ana", "Lopez", 68, "Spanish", "Panama");
-        Elder tara = new Elder("Tara", "Jackson", 80, "English", "United States");
+//        Elder farhan = new Elder("Farhan", "Ghafran", 72, "Arabic", "Lebanon");
+//        Elder ana = new Elder("Ana", "Lopez", 68, "Spanish", "Panama");
+//        Elder tara = new Elder("Tara", "Jackson", 80, "English", "United States");
         arr = new ArrayList<>();
         favArr = new ArrayList<>();
-/*        arr.add(farhan);
-        arr.add(ana);
-        arr.add(tara);*/
+//        arr.add(farhan);
+//        arr.add(ana);
+//        arr.add(tara);
         searchAdapter = new ItemAdapter(arr, this);
         searchRV.setLayoutManager(new LinearLayoutManager(this));
         searchRV.setAdapter(searchAdapter);
-        ////////
-//        searchAdapter.setOnItemClickListener(new ItemAdapter.OnItemClickListener() {
-//            @Override
-//            public void onFavoriteClick(int position) {
-//                toggleFavorite(position);
-//            }
-//            @Override
-//            public void onDeleteClick(int position) {
-//                removeItem(position);
-//            }
-//        });
-        ///////
     }
 
     private void initSearchButton() {
@@ -64,12 +53,15 @@ public class MainActivity extends AppCompatActivity implements SearchDialog.MyLi
 
     @Override
     public void applyChanges(ContentValues cv) {
-        Elder farhan = new Elder("Farhan", "Ghafran", 72, "Arabic", "Lebanon");
-        Elder ana = new Elder("Ana", "Lopez", 68, "Spanish", "Panama");
-        Elder tara = new Elder("Tara", "Jackson", 80, "English", "United States");
-        arr.add(farhan);
-        arr.add(ana);
-        arr.add(tara);
+        if(firstLoad) {
+            Elder farhan = new Elder("Farhan", "Ghafran", 72, "Arabic", "Lebanon");
+            Elder ana = new Elder("Ana", "Lopez", 68, "Spanish", "Panama");
+            Elder tara = new Elder("Tara", "Jackson", 80, "English", "United States");
+            arr.add(farhan);
+            arr.add(ana);
+            arr.add(tara);
+            firstLoad = false;
+        }
         String language = (String) cv.get("language");
         ArrayList<Elder> tempArr = new ArrayList<>();
 
