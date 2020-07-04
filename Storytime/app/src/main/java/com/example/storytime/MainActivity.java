@@ -1,15 +1,27 @@
 package com.example.storytime;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.ContentValues;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 
 import java.util.ArrayList;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class MainActivity extends AppCompatActivity implements SearchDialog.MyListener  {
     private RecyclerView searchRV;
@@ -19,6 +31,8 @@ public class MainActivity extends AppCompatActivity implements SearchDialog.MyLi
     public ArrayList<Elder> favArr;
     public ArrayList<Elder> searchResultsArr;
     static boolean firstLoad = true;
+    private FirebaseAuth mAuth;
+    private FirebaseFirestore db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,14 +42,11 @@ public class MainActivity extends AppCompatActivity implements SearchDialog.MyLi
         initSearchButton();
 
         searchRV = findViewById(R.id.recyclerViewSearch);
-//        Elder farhan = new Elder("Farhan", "Ghafran", 72, "Arabic", "Lebanon");
-//        Elder ana = new Elder("Ana", "Lopez", 68, "Spanish", "Panama");
-//        Elder tara = new Elder("Tara", "Jackson", 80, "English", "United States");
         arr = new ArrayList<>();
         favArr = new ArrayList<>();
-//        arr.add(farhan);
-//        arr.add(ana);
-//        arr.add(tara);
+        mAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
+
         searchAdapter = new ItemAdapter(arr, this);
         searchRV.setLayoutManager(new LinearLayoutManager(this));
         searchRV.setAdapter(searchAdapter);
@@ -52,7 +63,7 @@ public class MainActivity extends AppCompatActivity implements SearchDialog.MyLi
     }
 
     @Override
-    public void applyChanges(ContentValues cv) {
+    public void loadSearchResults(ContentValues cv) {
         if(firstLoad) {
             Elder farhan = new Elder("Farhan", "Ghafran", 72, "Arabic", "Lebanon");
             Elder ana = new Elder("Ana", "Lopez", 68, "Spanish", "Panama");
@@ -81,4 +92,6 @@ public class MainActivity extends AppCompatActivity implements SearchDialog.MyLi
         searchRV.setAdapter(searchAdapter);
 
     }
+
+
 }

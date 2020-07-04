@@ -54,4 +54,25 @@ public class Elder {
     public void setNationality(String nationality) {
         this.nationality = nationality;
     }
+
+    public boolean equals(Elder other) {
+        if(!firstName.equals(other.getFirstName())) {
+            return false;
+        }
+        else if(!lastName.equals(other.getLastName())) {
+            return false;
+        }
+        else if(!language.equals(other.getLanguage())) {
+            return false;
+        }
+        else if(!nationality.equals(other.getNationality())) {
+            return false;
+        }
+        else if(age != other.getAge()) {
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
 }

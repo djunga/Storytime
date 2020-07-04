@@ -41,7 +41,7 @@ public class SearchDialog extends DialogFragment {
                 spinnerLanguages = view.findViewById(R.id.spinnerLanguages);
                 ContentValues searchCriteria = new ContentValues();
                 searchCriteria.put("language", spinnerLanguages.getSelectedItem().toString());
-                listener.applyChanges(searchCriteria);
+                listener.loadSearchResults(searchCriteria);
 
                 getDialog().dismiss();
             }
@@ -61,7 +61,7 @@ public class SearchDialog extends DialogFragment {
     }
 
     public interface MyListener {
-        void applyChanges(ContentValues cv);
+        void loadSearchResults(ContentValues cv);
     }
 
 }
