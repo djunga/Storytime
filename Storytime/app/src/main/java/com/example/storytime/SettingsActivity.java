@@ -28,8 +28,8 @@ public class SettingsActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
     private RadioButton selectedButton;
-    private RadioButton button14;
-    private RadioButton button24;
+    private RadioButton button48;
+    private RadioButton button60;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,8 +64,8 @@ public class SettingsActivity extends AppCompatActivity {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
                         int fontSize = ((Long) document.get("fontSize")).intValue();
-                        if(fontSize == 14) { button14.toggle(); }
-                        else if(fontSize == 24) { button24.toggle(); }
+                        if(fontSize == 48) { button48.toggle(); }
+                        else if(fontSize == 60) { button60.toggle(); }
                         System.out.println("dino jr.");
                     } else {
                         /////////
@@ -78,11 +78,11 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     private void init24ptButton() {
-        button24 = findViewById(R.id.radioButton24pt);
-        button24.setOnClickListener(new View.OnClickListener() {
+        button60 = findViewById(R.id.radioButton60pt);
+        button60.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 String uid = mAuth.getUid();
-                db.collection("users").document(uid).update("fontSize", 24);
+                db.collection("users").document(uid).update("fontSize", 60);
             }
         });
     }
@@ -90,13 +90,13 @@ public class SettingsActivity extends AppCompatActivity {
 
     private void init14ptButton() {
         //final RadioGroup group = findViewById(R.id.radioGroup);
-        button14 = findViewById(R.id.radioButton14pt);
-        button14.setOnClickListener(new View.OnClickListener() {
+        button48 = findViewById(R.id.radioButton48pt);
+        button48.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 //                int selectedId = group.getCheckedRadioButtonId();
 //                button14 = (RadioButton) findViewById(selectedId);
                 String uid = mAuth.getUid();
-                db.collection("users").document(uid).update("fontSize", 14);
+                db.collection("users").document(uid).update("fontSize", 48);
             }
         });
     }

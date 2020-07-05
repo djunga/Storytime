@@ -54,17 +54,17 @@
         app:layout_constraintVertical_bias="0.116">
 
         <RadioButton
-            android:id="@+id/radioButton14pt"
+            android:id="@+id/radioButton48pt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="14pt"
+            android:text="48pt"
             android:textColor="#CCCCCC" />
 
         <RadioButton
-            android:id="@+id/radioButton24pt"
+            android:id="@+id/radioButton60pt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="24pt"
+            android:text="60pt"
             android:textColor="#CCCCCC" />
     </RadioGroup>
 

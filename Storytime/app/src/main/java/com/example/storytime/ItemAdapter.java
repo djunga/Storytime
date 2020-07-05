@@ -132,22 +132,13 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.EldersViewHold
                     if (document.exists()) {
                         Log.d(TAG, "DocumentSnapshot data: " + document.getData());
                         int fontSize = ((Long) document.get("fontSize")).intValue();
-                        Resources res = context.getResources();
-                        if(fontSize == 14) {
-                            holder.textViewName.setTextSize(TypedValue.COMPLEX_UNIT_PX, res.getDimension(R.dimen.fontSize14pt));
-                            holder.textViewAge.setTextSize(TypedValue.COMPLEX_UNIT_PX, res.getDimension(R.dimen.fontSize14pt));
-                            holder.textViewLanguage.setTextSize(TypedValue.COMPLEX_UNIT_PX, res.getDimension(R.dimen.fontSize14pt));
-                            holder.textViewNationality.setTextSize(TypedValue.COMPLEX_UNIT_PX, res.getDimension(R.dimen.fontSize14pt));
-                        }
-                        else if(fontSize == 24) {
-                            holder.textViewName.setTextSize(TypedValue.COMPLEX_UNIT_PX, res.getDimension(R.dimen.fontSize24pt));
-                            holder.textViewAge.setTextSize(TypedValue.COMPLEX_UNIT_PX, res.getDimension(R.dimen.fontSize24pt));
-                            holder.textViewLanguage.setTextSize(TypedValue.COMPLEX_UNIT_PX, res.getDimension(R.dimen.fontSize24pt));
-                            holder.textViewNationality.setTextSize(TypedValue.COMPLEX_UNIT_PX, res.getDimension(R.dimen.fontSize24pt));
-                        }
+                        holder.textViewName.setTextSize(TypedValue.COMPLEX_UNIT_PX, fontSize);
+                        holder.textViewAge.setTextSize(TypedValue.COMPLEX_UNIT_PX, fontSize);
+                        holder.textViewLanguage.setTextSize(TypedValue.COMPLEX_UNIT_PX, fontSize);
+                        holder.textViewNationality.setTextSize(TypedValue.COMPLEX_UNIT_PX, fontSize);
                         System.out.println("dino jr.");
                     } else {
-                        ////////
+
                     }
                 } else {
                     ///////

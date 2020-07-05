@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +15,12 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -27,6 +33,7 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Elde
     ArrayList<Elder> elderArr;
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
+    private static final String TAG = "Set Favorites: ";
 
     public class EldersViewHolder extends RecyclerView.ViewHolder {
         public TextView textViewName;
@@ -81,6 +88,38 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Elde
         holder.textViewAge.setText(""+currentElder.getAge() + " years old");
         holder.textViewLanguage.setText(currentElder.getLanguage());
         holder.textViewNationality.setText(currentElder.getNationality());
+
+        ////////////////
+        db = FirebaseFirestore.getInstance();
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        String uid = currentUser.getUid();
+        DocumentReference docRef = db.collection("users").document(uid);
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        Log.d(TAG, "DocumentSnapshot data: " + document.getData());
+                        int fontSize = ((Long) document.get("fontSize")).intValue();
+                        holder.textViewName.setTextSize(TypedValue.COMPLEX_UNIT_PX, fontSize);
+                        holder.textViewAge.setTextSize(TypedValue.COMPLEX_UNIT_PX, fontSize);
+                        holder.textViewLanguage.setTextSize(TypedValue.COMPLEX_UNIT_PX, fontSize);
+                        holder.textViewNationality.setTextSize(TypedValue.COMPLEX_UNIT_PX, fontSize);
+                        System.out.println("dino jr.");
+                    } else {
+                        ////////
+                    }
+                } else {
+                    ///////
+                }
+            }
+        });
+
+        /////////////////
+
+
         String fn = currentElder.getFirstName();
         if(fn.toLowerCase().equals("farhan")) {
             holder.imageViewPFP.setImageResource(R.drawable.farhan);
