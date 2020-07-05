@@ -1,26 +1,17 @@
 package com.example.storytime;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.ImageView;
-
 import java.util.ArrayList;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class MainActivity extends AppCompatActivity implements SearchDialog.MyListener  {
@@ -40,6 +31,7 @@ public class MainActivity extends AppCompatActivity implements SearchDialog.MyLi
         setContentView(R.layout.activity_main);
 
         initSearchButton();
+        initStatsButton();
 
         searchRV = findViewById(R.id.recyclerViewSearch);
         arr = new ArrayList<>();
@@ -58,6 +50,17 @@ public class MainActivity extends AppCompatActivity implements SearchDialog.MyLi
             public void onClick(View v) {
                 searchDialog = new SearchDialog();
                 searchDialog.show(getSupportFragmentManager(), "Set up search");
+            }
+        });
+    }
+
+    private void initStatsButton() {
+        ImageButton button = findViewById(R.id.imageButtonStats);
+        button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, StatsActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
             }
         });
     }
