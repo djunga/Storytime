@@ -14,30 +14,19 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.EldersViewHolder> {
     ArrayList<Elder> elderArr;
-    private Context context;
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
-
-    public interface GetFavArrListener {
-        void getFavArr(ArrayList<Elder> arr);
-    }
 
     public class EldersViewHolder extends RecyclerView.ViewHolder {
         public TextView textViewName;
@@ -60,9 +49,8 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Elde
         }
     }
 
-    public FavoritesAdapter(ArrayList<Elder> list, Context context) {
+    public FavoritesAdapter(ArrayList<Elder> list) {
         elderArr = list;
-        this.context = context;
     }
 
     @Override
@@ -75,16 +63,14 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Elde
     @Override
     public void onBindViewHolder(@NonNull FavoritesAdapter.EldersViewHolder holder, int position) {
         final ImageButton imageButtonFavorite = holder.itemView.findViewById(R.id.imageButtonFavorite);
+        imageButtonFavorite.setImageResource(R.drawable.favorite32);
+        imageButtonFavorite.setColorFilter(0);
         final int mPosition = position;
         imageButtonFavorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Drawable x = imageButtonFavorite.getDrawable();
-                Bitmap currBit = ((BitmapDrawable)imageButtonFavorite.getDrawable()).getBitmap();
-                Resources res = context.getResources();
-                Drawable fav = res.getDrawable(R.drawable.favorite32);
-                Bitmap favBit = BitmapFactory.decodeResource(context.getResources(), R.drawable.favorite32);
                 Elder currentElder = elderArr.get(mPosition);
+                elderArr.remove(mPosition);
                 imageButtonFavorite.setImageResource(R.drawable.clearstar32);
                 removeFromFavorites(currentElder);
             }

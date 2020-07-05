@@ -1,6 +1,5 @@
 package com.example.storytime;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -24,13 +23,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.FirebaseFirestore;
-
-public class StatsActivity extends AppCompatActivity implements FavoritesAdapter.GetFavArrListener {
+public class StatsActivity extends AppCompatActivity {
     public ArrayList<Elder> arr;
-    public ArrayList<Elder> favArr;
-    private RecyclerView favoritesRV;
+    public static ArrayList<Elder> favArr;
+    private static RecyclerView favoritesRV;
     private static FavoritesAdapter favoritesAdapter;
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
@@ -41,7 +37,8 @@ public class StatsActivity extends AppCompatActivity implements FavoritesAdapter
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stats);
         favoritesRV = findViewById(R.id.recyclerViewFavorites);
-        favArr = new ArrayList<>();
+
+        initHomeButton();
 
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
@@ -59,7 +56,9 @@ public class StatsActivity extends AppCompatActivity implements FavoritesAdapter
                         ///////////
                         ArrayList<HashMap<String,Object>> hashes = (ArrayList<HashMap<String,Object>>) document.get("favorites");
                         favArr = hashMapToArrayList(hashes);
-                        System.out.println("dino jr.");
+                        favoritesAdapter = new FavoritesAdapter(favArr);
+                        favoritesRV.setLayoutManager(new LinearLayoutManager(StatsActivity.this));
+                        favoritesRV.setAdapter(favoritesAdapter);
                     } else {
                         ////////
                     }
@@ -68,12 +67,18 @@ public class StatsActivity extends AppCompatActivity implements FavoritesAdapter
                 }
             }
         });
-
-        favoritesAdapter = new FavoritesAdapter(favArr, this);
-        favoritesRV.setLayoutManager(new LinearLayoutManager(this));
-        favoritesRV.setAdapter(favoritesAdapter);
     }
 
+    private void initHomeButton() {
+        ImageButton button = findViewById(R.id.imageButtonHome);
+        button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                Intent intent = new Intent(StatsActivity.this, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            }
+        });
+    }
 
     public ArrayList<Elder> hashMapToArrayList(ArrayList<HashMap<String,Object>> hashes) {
         ArrayList<Elder> elders = new ArrayList<>();
@@ -91,12 +96,4 @@ public class StatsActivity extends AppCompatActivity implements FavoritesAdapter
         return elders;
     }
 
-    @Override
-    public void getFavArr(ArrayList<Elder> arr) {
-        favArr = arr;
-        favoritesAdapter = new FavoritesAdapter(favArr, this);
-        favoritesRV.setLayoutManager(new LinearLayoutManager(this));
-        favoritesRV.setAdapter(favoritesAdapter);
-        //reload();
-    }
 }
