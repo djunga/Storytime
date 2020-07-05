@@ -127,6 +127,10 @@ private void createAccount(String email, String password) {
                                 .update(
                                         "favorites", favArr
                                 );
+                        db.collection("users").document(newUserUID)
+                                .update(
+                                        "fontSize", 14
+                                );
                         updateUI(user);
                     } else {
                         // If sign in fails, display a message to the user.

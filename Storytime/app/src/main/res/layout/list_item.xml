@@ -53,7 +53,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Nationality"
-            android:textColor="#FFFFFF" />
+            android:textColor="#FFFFFF"
+            android:textSize="@dimen/fontSize14pt" />
 
 
     </LinearLayout>
@@ -65,6 +66,7 @@
         android:layout_marginTop="8dp"
         android:text="Age"
         android:textColor="#FFFFFF"
+        android:textSize="@dimen/fontSize14pt"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/imageViewPFP"
@@ -77,6 +79,7 @@
         android:layout_marginTop="4dp"
         android:text="Language"
         android:textColor="#FFFFFF"
+        android:textSize="@dimen/fontSize14pt"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/imageViewPFP"
@@ -89,8 +92,9 @@
         android:layout_marginTop="16dp"
         android:text="Name"
         android:textColor="#FFFFFF"
+        android:textSize="@dimen/fontSize14pt"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.427"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/imageViewPFP"
         app:layout_constraintTop_toTopOf="parent" />
 

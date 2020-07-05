@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity implements SearchDialog.MyLi
 
         initSearchButton();
         initStatsButton();
+        initSettingsButton();
 
         searchRV = findViewById(R.id.recyclerViewSearch);
         arr = new ArrayList<>();
@@ -42,6 +43,7 @@ public class MainActivity extends AppCompatActivity implements SearchDialog.MyLi
         searchAdapter = new ItemAdapter(arr, this);
         searchRV.setLayoutManager(new LinearLayoutManager(this));
         searchRV.setAdapter(searchAdapter);
+        firstLoad = true;
     }
 
     private void initSearchButton() {
@@ -59,6 +61,17 @@ public class MainActivity extends AppCompatActivity implements SearchDialog.MyLi
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, StatsActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            }
+        });
+    }
+
+    private void initSettingsButton() {
+        ImageButton button = findViewById(R.id.imageButtonSettings);
+        button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             }

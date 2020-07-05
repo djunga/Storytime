@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#484E71"
+    tools:context=".SettingsActivity">
+
+    <LinearLayout
+        android:id="@+id/linearLayoutNavBar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="#1a1a48"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ImageButton
+            android:id="@+id/imageButtonHome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:contentDescription="@string/contentHomeButton"
+            app:srcCompat="@drawable/icon_home32" />
+
+        <ImageButton
+            android:id="@+id/imageButtonStats"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:contentDescription="@string/contentStatsButton"
+            app:srcCompat="@drawable/icon_list32" />
+
+        <ImageButton
+            android:id="@+id/imageButtonSettings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:contentDescription="@string/contentSettingsButton"
+            app:srcCompat="@drawable/icon_settings32" />
+    </LinearLayout>
+
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="103dp"
+        android:layout_height="121dp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayoutNavBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.103"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.116">
+
+        <RadioButton
+            android:id="@+id/radioButton14pt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="14pt"
+            android:textColor="#CCCCCC" />
+
+        <RadioButton
+            android:id="@+id/radioButton24pt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="24pt"
+            android:textColor="#CCCCCC" />
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/textViewFontSize"
+        android:layout_width="166dp"
+        android:layout_height="40dp"
+        android:text="Font size"
+        android:textColor="#CCCCCC"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayoutNavBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.065"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.025" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

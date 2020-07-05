@@ -39,6 +39,7 @@ public class StatsActivity extends AppCompatActivity {
         favoritesRV = findViewById(R.id.recyclerViewFavorites);
 
         initHomeButton();
+        initSettingsButton();
 
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
@@ -74,6 +75,17 @@ public class StatsActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 Intent intent = new Intent(StatsActivity.this, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            }
+        });
+    }
+
+    private void initSettingsButton() {
+        ImageButton button = findViewById(R.id.imageButtonSettings);
+        button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                Intent intent = new Intent(StatsActivity.this, SettingsActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             }

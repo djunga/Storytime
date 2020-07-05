@@ -10,6 +10,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -116,6 +117,46 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.EldersViewHold
         holder.textViewAge.setText(""+currentElder.getAge() + " years old");
         holder.textViewLanguage.setText(currentElder.getLanguage());
         holder.textViewNationality.setText(currentElder.getNationality());
+
+        ////////////////
+        db = FirebaseFirestore.getInstance();
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        String uid = currentUser.getUid();
+        DocumentReference docRef = db.collection("users").document(uid);
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        Log.d(TAG, "DocumentSnapshot data: " + document.getData());
+                        int fontSize = ((Long) document.get("fontSize")).intValue();
+                        Resources res = context.getResources();
+                        if(fontSize == 14) {
+                            holder.textViewName.setTextSize(TypedValue.COMPLEX_UNIT_PX, res.getDimension(R.dimen.fontSize14pt));
+                            holder.textViewAge.setTextSize(TypedValue.COMPLEX_UNIT_PX, res.getDimension(R.dimen.fontSize14pt));
+                            holder.textViewLanguage.setTextSize(TypedValue.COMPLEX_UNIT_PX, res.getDimension(R.dimen.fontSize14pt));
+                            holder.textViewNationality.setTextSize(TypedValue.COMPLEX_UNIT_PX, res.getDimension(R.dimen.fontSize14pt));
+                        }
+                        else if(fontSize == 24) {
+                            holder.textViewName.setTextSize(TypedValue.COMPLEX_UNIT_PX, res.getDimension(R.dimen.fontSize24pt));
+                            holder.textViewAge.setTextSize(TypedValue.COMPLEX_UNIT_PX, res.getDimension(R.dimen.fontSize24pt));
+                            holder.textViewLanguage.setTextSize(TypedValue.COMPLEX_UNIT_PX, res.getDimension(R.dimen.fontSize24pt));
+                            holder.textViewNationality.setTextSize(TypedValue.COMPLEX_UNIT_PX, res.getDimension(R.dimen.fontSize24pt));
+                        }
+                        System.out.println("dino jr.");
+                    } else {
+                        ////////
+                    }
+                } else {
+                    ///////
+                }
+            }
+        });
+
+        /////////////////
+
         String fn = currentElder.getFirstName();
         if(fn.toLowerCase().equals("farhan")) {
             holder.imageViewPFP.setImageResource(R.drawable.farhan);
