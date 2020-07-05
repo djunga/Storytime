@@ -1,12 +1,14 @@
 package com.example.storytime;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
@@ -61,6 +63,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.EldersViewHold
         public ImageView imageViewPFP;
         public ImageView imageViewFlag;
         public ImageButton imageButtonFavorite;
+        public ConstraintLayout constraintLayoutItem;
 
         public EldersViewHolder(View itemView) {
             super(itemView);
@@ -71,6 +74,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.EldersViewHold
             imageViewPFP = itemView.findViewById(R.id.imageViewPFP);
             imageViewFlag = itemView.findViewById(R.id.imageViewFlag);
             imageButtonFavorite = itemView.findViewById(R.id.imageButtonFavorite);
+            constraintLayoutItem = itemView.findViewById(R.id.constraintLayoutItem);
         }
     }
 
@@ -118,7 +122,6 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.EldersViewHold
         holder.textViewLanguage.setText(currentElder.getLanguage());
         holder.textViewNationality.setText(currentElder.getNationality());
 
-        ////////////////
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
@@ -137,6 +140,15 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.EldersViewHold
                         holder.textViewLanguage.setTextSize(TypedValue.COMPLEX_UNIT_PX, fontSize);
                         holder.textViewNationality.setTextSize(TypedValue.COMPLEX_UNIT_PX, fontSize);
                         System.out.println("dino jr.");
+
+                        String style = (String) document.get("style");
+                        if(style.equals("crimson")) {
+                            holder.constraintLayoutItem.setBackgroundColor(Color.parseColor("#A61B1B"));
+                        }
+                        else if(style.equals("indigo")) {
+                            holder.constraintLayoutItem.setBackgroundColor(Color.parseColor("#3D4EAE"));
+                        }
+
                     } else {
 
                     }
@@ -145,8 +157,6 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.EldersViewHold
                 }
             }
         });
-
-        /////////////////
 
         String fn = currentElder.getFirstName();
         if(fn.toLowerCase().equals("farhan")) {

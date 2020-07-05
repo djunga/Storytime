@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
@@ -27,6 +28,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.EldersViewHolder> {
@@ -43,6 +45,7 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Elde
         public ImageView imageViewPFP;
         public ImageView imageViewFlag;
         public ImageButton imageButtonFavorite;
+        public ConstraintLayout constraintLayoutItem;
 
         public EldersViewHolder(View itemView) {
             super(itemView);
@@ -53,6 +56,7 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Elde
             imageViewPFP = itemView.findViewById(R.id.imageViewPFP);
             imageViewFlag = itemView.findViewById(R.id.imageViewFlag);
             imageButtonFavorite = itemView.findViewById(R.id.imageButtonFavorite);
+            constraintLayoutItem = itemView.findViewById(R.id.constraintLayoutItem);
         }
     }
 
@@ -89,7 +93,6 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Elde
         holder.textViewLanguage.setText(currentElder.getLanguage());
         holder.textViewNationality.setText(currentElder.getNationality());
 
-        ////////////////
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
@@ -108,6 +111,14 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Elde
                         holder.textViewLanguage.setTextSize(TypedValue.COMPLEX_UNIT_PX, fontSize);
                         holder.textViewNationality.setTextSize(TypedValue.COMPLEX_UNIT_PX, fontSize);
                         System.out.println("dino jr.");
+
+                        String style = (String) document.get("style");
+                        if(style.equals("crimson")) {
+                            holder.constraintLayoutItem.setBackgroundColor(Color.parseColor("#A61B1B"));
+                        }
+                        else if(style.equals("indigo")) {
+                            holder.constraintLayoutItem.setBackgroundColor(Color.parseColor("#3D4EAE"));
+                        }
                     } else {
                         ////////
                     }
@@ -116,9 +127,6 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Elde
                 }
             }
         });
-
-        /////////////////
-
 
         String fn = currentElder.getFirstName();
         if(fn.toLowerCase().equals("farhan")) {

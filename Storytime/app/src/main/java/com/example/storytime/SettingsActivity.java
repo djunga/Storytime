@@ -1,6 +1,7 @@
 package com.example.storytime;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -14,22 +15,19 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
-
-import java.util.ArrayList;
-import java.util.HashMap;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 public class SettingsActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
-    private RadioButton selectedButton;
     private RadioButton button48;
     private RadioButton button60;
+    private RadioButton buttonIndigo;
+    private RadioButton buttonCrimson;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,24 +38,21 @@ public class SettingsActivity extends AppCompatActivity {
         initHomeButton();
         init14ptButton();
         init24ptButton();
+        initIndigoButton();
+        initCrimsonButton();
 
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
 
         setFontButton();
-        //setFontSizes();
+        setStyleButton();
     }
-
-//    public void setFontSizes() {
-//
-//    }
 
     public void setFontButton() {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         String uid = currentUser.getUid();
         DocumentReference docRef = db.collection("users").document(uid);
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            boolean result = false;
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
@@ -77,6 +72,60 @@ public class SettingsActivity extends AppCompatActivity {
         });
     }
 
+    public void setStyleButton() {
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        String uid = currentUser.getUid();
+        DocumentReference docRef = db.collection("users").document(uid);
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        ConstraintLayout settingsConstraintLayout = findViewById(R.id.constraintLayoutSettings);
+                        String style = (String) document.get("style");
+                        if(style.equals("crimson")) {
+                            settingsConstraintLayout.setBackgroundColor(Color.parseColor("#531111"));
+                            buttonCrimson.toggle();
+                        }
+                        else if(style.equals("indigo")) {
+                            settingsConstraintLayout.setBackgroundColor(Color.parseColor("#484E71"));
+                            buttonIndigo.toggle();
+                        }
+                    } else {
+                        /////////
+                    }
+                } else {
+                    ////////
+                }
+            }
+        });
+    }
+
+    private void initIndigoButton() {
+        buttonIndigo = findViewById(R.id.radioButtonIndigo);
+        buttonIndigo.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                String uid = mAuth.getUid();
+                db.collection("users").document(uid).update("style", "indigo");
+                ConstraintLayout settingsConstraintLayout = findViewById(R.id.constraintLayoutSettings);
+                settingsConstraintLayout.setBackgroundColor(Color.parseColor("#484E71"));
+            }
+        });
+    }
+
+    private void initCrimsonButton() {
+        buttonCrimson = findViewById(R.id.radioButtonCrimson);
+        buttonCrimson.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                String uid = mAuth.getUid();
+                db.collection("users").document(uid).update("style", "crimson");
+                ConstraintLayout settingsConstraintLayout = findViewById(R.id.constraintLayoutSettings);
+                settingsConstraintLayout.setBackgroundColor(Color.parseColor("#531111"));
+            }
+        });
+    }
+
     private void init24ptButton() {
         button60 = findViewById(R.id.radioButton60pt);
         button60.setOnClickListener(new View.OnClickListener() {
@@ -87,14 +136,10 @@ public class SettingsActivity extends AppCompatActivity {
         });
     }
 
-
     private void init14ptButton() {
-        //final RadioGroup group = findViewById(R.id.radioGroup);
         button48 = findViewById(R.id.radioButton48pt);
         button48.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-//                int selectedId = group.getCheckedRadioButtonId();
-//                button14 = (RadioButton) findViewById(selectedId);
                 String uid = mAuth.getUid();
                 db.collection("users").document(uid).update("fontSize", 48);
             }

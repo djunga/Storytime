@@ -1,6 +1,7 @@
 package com.example.storytime;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,6 +21,7 @@ import java.util.HashMap;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -30,6 +32,7 @@ public class StatsActivity extends AppCompatActivity {
     private static FavoritesAdapter favoritesAdapter;
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
+    private ConstraintLayout constraintLayoutStats;
 
 
     @Override
@@ -43,6 +46,9 @@ public class StatsActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
+        constraintLayoutStats = findViewById(R.id.constraintLayoutStats);
+
+        setStyle();
 
         FirebaseUser currentUser = mAuth.getCurrentUser();
         String uid = currentUser.getUid();
@@ -65,6 +71,36 @@ public class StatsActivity extends AppCompatActivity {
                     }
                 } else {
                    ///////
+                }
+            }
+        });
+    }
+
+    public void setStyle() {
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        String uid = currentUser.getUid();
+        DocumentReference docRef = db.collection("users").document(uid);
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        String style = (String) document.get("style");
+                        if(style.equals("crimson")) {
+                            constraintLayoutStats.setBackgroundColor(Color.parseColor("#531111"));
+                            favoritesRV.setBackgroundColor(Color.parseColor("#531111"));
+                        }
+                        else if(style.equals("indigo")) {
+                            constraintLayoutStats.setBackgroundColor(Color.parseColor("#484E71"));
+                            favoritesRV.setBackgroundColor(Color.parseColor("#484E71"));
+                        }
+
+                    } else {
+
+                    }
+                } else {
+                    ///////
                 }
             }
         });

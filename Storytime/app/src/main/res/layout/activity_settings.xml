@@ -2,9 +2,10 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraintLayoutSettings"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#484E71"
+    android:background="#531111"
     tools:context=".SettingsActivity">
 
     <LinearLayout
@@ -81,5 +82,45 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.025" />
+
+    <TextView
+        android:id="@+id/textViewStyle"
+        android:layout_width="155dp"
+        android:layout_height="49dp"
+        android:text="Style"
+        android:textColor="#CCCCCC"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayoutNavBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.062"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.326" />
+
+    <RadioGroup
+        android:layout_width="108dp"
+        android:layout_height="150dp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayoutNavBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.105"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.503">
+
+        <RadioButton
+            android:id="@+id/radioButtonIndigo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Indigo"
+            android:textColor="#CCCCCC" />
+
+        <RadioButton
+            android:id="@+id/radioButtonCrimson"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Crimson"
+            android:textColor="#CCCCCC" />
+
+    </RadioGroup>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

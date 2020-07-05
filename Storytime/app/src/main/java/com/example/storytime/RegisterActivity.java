@@ -129,7 +129,11 @@ private void createAccount(String email, String password) {
                                 );
                         db.collection("users").document(newUserUID)
                                 .update(
-                                        "fontSize", 14
+                                        "fontSize", 48
+                                );
+                        db.collection("users").document(newUserUID)
+                                .update(
+                                        "style", "indigo"
                                 );
                         updateUI(user);
                     } else {
