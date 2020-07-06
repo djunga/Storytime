@@ -123,4 +123,18 @@
 
     </RadioGroup>
 
+    <Button
+        android:id="@+id/buttonLogout"
+        android:layout_width="237dp"
+        android:layout_height="57dp"
+        android:background="#96D2FF"
+        android:text="Log out"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.736" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

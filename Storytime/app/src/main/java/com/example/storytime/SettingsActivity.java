@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -28,6 +29,7 @@ public class SettingsActivity extends AppCompatActivity {
     private RadioButton button60;
     private RadioButton buttonIndigo;
     private RadioButton buttonCrimson;
+    private Button buttonLogout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,12 +42,29 @@ public class SettingsActivity extends AppCompatActivity {
         init24ptButton();
         initIndigoButton();
         initCrimsonButton();
+        initLogOutButton();
 
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
 
         setFontButton();
         setStyleButton();
+    }
+
+    private void initLogOutButton() {
+        buttonLogout = findViewById(R.id.buttonLogout);
+        buttonLogout.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                logOut();
+            }
+        });
+    }
+
+    public void logOut() {
+        mAuth.signOut();
+        Intent intent = new Intent(SettingsActivity.this, RegisterLoginScreen.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
     }
 
     public void setFontButton() {
