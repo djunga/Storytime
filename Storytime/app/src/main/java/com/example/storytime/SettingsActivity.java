@@ -1,14 +1,16 @@
+/*
+ * NAME: Tora Mullings
+ * SB ID: 111407756
+ * */
 package com.example.storytime;
 
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -22,6 +24,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+/**
+ * This class handles the settings page.
+ * It lays out an interface for the user to customize
+ * their experience.
+ * The user can also sign out here.
+ */
 public class SettingsActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
@@ -60,6 +68,10 @@ public class SettingsActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Firebase authentication is used to log out the user.
+     * The user gets sent to the register/login screen.
+     */
     public void logOut() {
         mAuth.signOut();
         Intent intent = new Intent(SettingsActivity.this, RegisterLoginScreen.class);
@@ -67,6 +79,10 @@ public class SettingsActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    /**
+     * This method goes into the firestore and gets the user's preference
+     * for the font size. It sets the radio button.
+     */
     public void setFontButton() {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         String uid = currentUser.getUid();
@@ -91,6 +107,10 @@ public class SettingsActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * This method goes into the firestore and sets the style.
+     * It toggles the radio button as well.
+     */
     public void setStyleButton() {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         String uid = currentUser.getUid();
@@ -121,6 +141,9 @@ public class SettingsActivity extends AppCompatActivity {
         });
     }
 
+    /*
+    * The methods below are for initializing the radio buttons and the log out button.
+    * */
     private void initIndigoButton() {
         buttonIndigo = findViewById(R.id.radioButtonIndigo);
         buttonIndigo.setOnClickListener(new View.OnClickListener() {

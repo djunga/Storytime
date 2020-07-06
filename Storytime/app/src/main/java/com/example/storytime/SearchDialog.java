@@ -1,24 +1,24 @@
+/*
+ * NAME: Tora Mullings
+ * SB ID: 111407756
+ * */
 package com.example.storytime;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-
-import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 
+/**
+ * The purpose of the Search Dialog is to create a dialog
+ * when the magnifying glass is clicked and prompt
+ * the user to enter search criteria.
+ */
 public class SearchDialog extends DialogFragment {
     private MyListener listener;
     private Spinner spinnerLanguages;
@@ -26,9 +26,7 @@ public class SearchDialog extends DialogFragment {
     public SearchDialog() {
         super();
     }
-/*    public SearchDialog(Item item) {
-        selectedItem = item;
-    }*/
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -52,6 +50,10 @@ public class SearchDialog extends DialogFragment {
         return view;
     }
 
+    /**
+     * The listener gets attached to Main Activity.
+     * @param context The context is Main Activity
+     */
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -63,6 +65,11 @@ public class SearchDialog extends DialogFragment {
         }
     }
 
+    /**
+     * This listener is for sending the search criteria to the main activity
+     * where it will be used to populate the recycler view with
+     * the correct search results.
+     */
     public interface MyListener {
         void loadSearchResults(ContentValues cv);
     }

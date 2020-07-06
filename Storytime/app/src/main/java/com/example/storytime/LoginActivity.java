@@ -1,20 +1,17 @@
+/*
+ * NAME: Tora Mullings
+ * SB ID: 111407756
+ * */
 package com.example.storytime;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-import android.content.Intent;
-import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
-import android.view.View;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -25,6 +22,9 @@ import com.google.firebase.auth.FirebaseUser;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+/**
+ * LoginActivity logs in the user.
+ */
 public class LoginActivity extends AppCompatActivity {
     private EditText loginEmail;
     private EditText loginPassword;
@@ -67,6 +67,11 @@ public class LoginActivity extends AppCompatActivity {
         updateUI(currentUser);
     }
 
+    /**
+     * The firebase authenticates login.
+     * @param email The email the user signs in with
+     * @param password The password the user signs in with
+     */
     private void signIn(String email, String password) {
         Log.d(TAG, "signIn:" + email);
         if (!validateForm()) {
@@ -109,6 +114,9 @@ public class LoginActivity extends AppCompatActivity {
         // [END sign_in_with_email]
     }
 
+    /**
+     * @return Returns whether the login was successful.
+     */
     private boolean validateForm() {
         boolean valid = true;
 
@@ -131,6 +139,10 @@ public class LoginActivity extends AppCompatActivity {
         return valid;
     }
 
+    /**
+     * This method starts the Main Activity.
+     * @param currentUser The current user.
+     */
     private void updateUI(FirebaseUser currentUser) {
         if(currentUser != null) {
             loginEmail.setText("Login was successful.");

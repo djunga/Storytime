@@ -1,10 +1,12 @@
+/*
+ * NAME: Tora Mullings
+ * SB ID: 111407756
+ * */
 package com.example.storytime;
 
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageButton;
 
@@ -25,6 +27,12 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+/**
+ * This class is for the Stats Screen. This is a prototype.
+ * For now it has a list of favorite elders for the user.
+ * In later versions it will have the user's listening streak and
+ * time listened.
+ */
 public class StatsActivity extends AppCompatActivity {
     public ArrayList<Elder> arr;
     public static ArrayList<Elder> favArr;
@@ -76,6 +84,9 @@ public class StatsActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * This method sets the style of the the interface, indigo or crimson.
+     */
     public void setStyle() {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         String uid = currentUser.getUid();
@@ -106,6 +117,7 @@ public class StatsActivity extends AppCompatActivity {
         });
     }
 
+    /*The methods below are for initialzing the tab bar buttons.*/
     private void initHomeButton() {
         ImageButton button = findViewById(R.id.imageButtonHome);
         button.setOnClickListener(new View.OnClickListener() {
@@ -128,6 +140,9 @@ public class StatsActivity extends AppCompatActivity {
         });
     }
 
+    /* This method converts the hashmap of elders returned by the firestore
+    * into an arraylist.
+    * */
     public ArrayList<Elder> hashMapToArrayList(ArrayList<HashMap<String,Object>> hashes) {
         ArrayList<Elder> elders = new ArrayList<>();
         for(int i=0; i<hashes.size(); i++) {

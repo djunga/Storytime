@@ -1,29 +1,28 @@
+/*
+ * NAME: Tora Mullings
+ * SB ID: 111407756
+ * */
 package com.example.storytime;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
-import android.content.ContentValues;
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -31,17 +30,15 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 /* These classes were modeled based on code from the textbook for the course.
  * We need an Adapter and a ViewHolder to respond when an item in the RecyclerView is clicked.
+ * The purpose of the ItemAdapter is to display the search results.
  * */
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.EldersViewHolder> {
     ArrayList<Elder> elderArr;
-    private OnItemClickListener mListener;
     private Context context;
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
@@ -51,10 +48,9 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.EldersViewHold
         void onFavoriteClick(int position);
     }
 
-    public void setOnItemClickListener(OnItemClickListener listener) {
-        mListener = listener;
-    }
-
+    /**
+     * The View Holder assigns variables to the nodes on the list view cards.
+     */
     public class EldersViewHolder extends RecyclerView.ViewHolder {
         public TextView textViewName;
         public TextView textViewAge;
@@ -90,6 +86,13 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.EldersViewHold
         return new EldersViewHolder(view);
     }
 
+    /**
+     * The purpose of this class is to set the Elder's information on the card.
+     * It also sets up a click listener for the user to save an Elder to their
+     * list of favorites.
+     * @param holder This holds each node on the list view card.
+     * @param position This is the position of the current card in the recycler view.
+     */
     @Override
     public void onBindViewHolder(@NonNull EldersViewHolder holder, int position) {
         final ImageButton imageButtonFavorite = holder.itemView.findViewById(R.id.imageButtonFavorite);
@@ -97,10 +100,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.EldersViewHold
         imageButtonFavorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Drawable x = imageButtonFavorite.getDrawable();
                 Bitmap currBit = ((BitmapDrawable)imageButtonFavorite.getDrawable()).getBitmap();
-                Resources res = context.getResources();
-                Drawable fav = res.getDrawable(R.drawable.favorite32);
                 Bitmap favBit = BitmapFactory.decodeResource(context.getResources(), R.drawable.favorite32);
                 Elder currentElder = elderArr.get(mPosition);
                 if(!favBit.sameAs(currBit)) {
@@ -112,7 +112,6 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.EldersViewHold
                     imageButtonFavorite.setImageResource(R.drawable.clearstar32);
                     removeFromFavorites(currentElder);
                 }
-
             }
         });
 
@@ -187,12 +186,21 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.EldersViewHold
         setFavoritesInSearch(currentElder, holder);
     }
 
+    /**
+     * This method enters the firestore to store the elder.
+     * @param elder The Elder to add to favorites.
+     */
     public void addToFavorites(Elder elder) {
         mAuth = FirebaseAuth.getInstance();
         String uid = mAuth.getUid();
         db = FirebaseFirestore.getInstance();
         db.collection("users").document(uid).update("favorites", FieldValue.arrayUnion(elder));
     }
+
+    /**
+     * This method enters the firestore remove the elder.
+     * @param elder The Elder to be removed.
+     */
     public void removeFromFavorites(Elder elder) {
         mAuth = FirebaseAuth.getInstance();
         String uid = mAuth.getUid();
@@ -200,6 +208,12 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.EldersViewHold
         db.collection("users").document(uid).update("favorites", FieldValue.arrayRemove(elder));
     }
 
+    /**
+     * This method is for checking which of the elders in the search results are also
+     * in the favorites list. It sets the yellow star on the card and make it clickable.
+     * @param e The current elder.
+     * @param h The view holder that has the nodes from the current card.
+     */
     public void setFavoritesInSearch(final Elder e, EldersViewHolder h) {
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
@@ -234,6 +248,12 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.EldersViewHold
         });
     }
 
+    /**
+     * This method converts the hashmap from the firestore into an
+     * arraylist of Elders.
+     * @param hashes The arraylist of hashmaps that the firestore returned.
+     * @return Returns an arraylist of Elders.
+     */
     public ArrayList<Elder> hashMapToArrayList(ArrayList<HashMap<String,Object>> hashes) {
         ArrayList<Elder> elders = new ArrayList<>();
         for(int i=0; i<hashes.size(); i++) {

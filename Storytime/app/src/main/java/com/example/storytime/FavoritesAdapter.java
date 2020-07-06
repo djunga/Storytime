@@ -1,12 +1,10 @@
+/*
+ * NAME: Tora Mullings
+ * SB ID: 111407756
+ * */
 package com.example.storytime;
 
-import android.content.Context;
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -31,6 +29,11 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
+/**
+ * The FavoritesAdapter is for displaying the recycler view populated with the user's
+ * favorited elders. It fetches an arraylist of the favorites from the Firestore.
+ * The arraylist is used as the source to populate the recycler view.
+ */
 public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.EldersViewHolder> {
     ArrayList<Elder> elderArr;
     private FirebaseAuth mAuth;
@@ -71,6 +74,14 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Elde
         return new FavoritesAdapter.EldersViewHolder(view);
     }
 
+    /**
+     * This class sets the Elder's information on the recycler view card. It also
+     * sets up the click listener for when the user clicks on the star on a card to remove
+     * the Elder from their favorites list.
+     * @param holder Contains the nodes in the list item that will be displayed for each
+     *               card in the recycler view.
+     * @param position The position of the current card in the recycler view.
+     */
     @Override
     public void onBindViewHolder(@NonNull FavoritesAdapter.EldersViewHolder holder, int position) {
         final ImageButton imageButtonFavorite = holder.itemView.findViewById(R.id.imageButtonFavorite);
@@ -155,6 +166,10 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Elde
         }
     }
 
+    /**
+     * @param elder The elder that will be removed the user's
+     *              favorite list.
+     */
     public void removeFromFavorites(Elder elder) {
         mAuth = FirebaseAuth.getInstance();
         String uid = mAuth.getUid();

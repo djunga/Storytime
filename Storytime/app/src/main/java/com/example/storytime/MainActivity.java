@@ -1,3 +1,7 @@
+/*
+ * NAME: Tora Mullings
+ * SB ID: 111407756
+ * */
 package com.example.storytime;
 
 import androidx.annotation.NonNull;
@@ -10,8 +14,6 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
-import android.util.TypedValue;
 import android.view.View;
 import android.widget.ImageButton;
 import java.util.ArrayList;
@@ -30,6 +32,12 @@ import androidx.core.app.NotificationManagerCompat;
 
 import static com.example.storytime.App.CHANNEL_1_ID;
 
+/**
+ * The MainActivity is the Home Screen. The user can click the magnifying glass
+ * to start a search for Elders based on language or nationality.
+ * It works with the ItemAdapter to populate a recycler view with
+ * search results.
+ */
 public class MainActivity extends AppCompatActivity implements SearchDialog.MyListener  {
     private RecyclerView searchRV;
     private static ItemAdapter searchAdapter;
@@ -77,6 +85,10 @@ public class MainActivity extends AppCompatActivity implements SearchDialog.MyLi
 
     }
 
+    /**
+     * A high importance notification pops up when the user signs in,
+     * prompting them to start a search.
+     */
     public void sendOnChannel1() {
         String title = "Welcome back!";
         String message = "Press the magnifying glass to find the perfect speaker!";
@@ -122,6 +134,10 @@ public class MainActivity extends AppCompatActivity implements SearchDialog.MyLi
         });
     }
 
+    /**
+     * This method sets the style of the interface, indigo or crimson.
+     * It fetches the style from the firestore.
+     */
     public void setStyle() {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         String uid = currentUser.getUid();
@@ -152,6 +168,11 @@ public class MainActivity extends AppCompatActivity implements SearchDialog.MyLi
         });
     }
 
+    /**
+     * This method sets the recycler view with the search results.
+     * @param cv This is the ContentValue object from the SearchDialog. It contains the
+     *           search criteria that the user requested.
+     */
     @Override
     public void loadSearchResults(ContentValues cv) {
         if(firstLoad) {

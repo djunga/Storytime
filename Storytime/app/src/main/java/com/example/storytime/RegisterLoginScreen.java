@@ -1,3 +1,7 @@
+/*
+ * NAME: Tora Mullings
+ * SB ID: 111407756
+ * */
 package com.example.storytime;
 
 import android.content.Context;
@@ -11,6 +15,10 @@ import androidx.multidex.MultiDex;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+/**
+ * This class starts an activity that is shown when the app is opened.
+ * The user is presented with 2 buttons, to login or register.
+ */
 public class RegisterLoginScreen extends AppCompatActivity {
     private FirebaseAuth mAuth;
 

@@ -1,5 +1,16 @@
+/*
+ * NAME: Tora Mullings
+ * SB ID: 111407756
+ * */
 package com.example.storytime;
 
+/**
+ * The Elder class is a blueprint for the elder users. Since this app is merely
+ * a prototype, registering elders will not be done at this stage.
+ * Instead, this class will be used to make Elders during runtime.
+ * Each Elder has a first name, last name, age, language, and nationality that
+ * will be displayed to the other users.
+ */
 public class Elder {
     private String firstName;
     private String lastName;
