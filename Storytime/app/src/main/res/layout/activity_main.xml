@@ -60,8 +60,9 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewSearch"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginTop="16dp"
         android:background="#531111"
         app:layout_constraintBottom_toTopOf="@+id/linearLayoutNavBar"
         app:layout_constraintEnd_toEndOf="parent"

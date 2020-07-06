@@ -158,21 +158,39 @@ public class MainActivity extends AppCompatActivity implements SearchDialog.MyLi
             Elder farhan = new Elder("Farhan", "Ghafran", 72, "Arabic", "Lebanon");
             Elder ana = new Elder("Ana", "Lopez", 68, "Spanish", "Panama");
             Elder tara = new Elder("Tara", "Jackson", 80, "English", "United States");
+            Elder sanjeed = new Elder("Sanjeed", "Jain", 67, "English", "India");
+            Elder cynthia = new Elder("Cynthia", "Vasquez", 66, "English", "Panama");
+            Elder james = new Elder("James", "Lee", 80, "English", "United States");
+
             arr.add(farhan);
             arr.add(ana);
             arr.add(tara);
+            arr.add(sanjeed);
+            arr.add(cynthia);
+            arr.add(james);
             firstLoad = false;
         }
         String language = (String) cv.get("language");
+        String country = (String) cv.get("country");
         ArrayList<Elder> tempArr = new ArrayList<>();
 
-        if(language.equals("Any")) {
+        if(language.equals("Any") && country.equals("Any")) {
             tempArr = arr;
         }
         else {
             for(int i=0; i<arr.size(); i++) {
                 Elder elder = arr.get(i);
-                if(elder.getLanguage().equals(language)) {
+                if(language.equals("Any")) {
+                    if(country.equals(elder.getNationality())) {
+                        tempArr.add(elder);
+                    }
+                }
+                else if(country.equals("Any")) {
+                    if(country.equals(elder.getLanguage())) {
+                        tempArr.add(elder);
+                    }
+                }
+                else if(elder.getLanguage().equals(language) && elder.getNationality().equals(country)) {
                     tempArr.add(elder);
                 }
             }

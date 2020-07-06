@@ -171,6 +171,18 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.EldersViewHold
             holder.imageViewPFP.setImageResource(R.drawable.tara);
             holder.imageViewFlag.setImageResource(R.drawable.unitedstates32);
         }
+        else if(fn.toLowerCase().equals("sanjeed")) {
+            holder.imageViewPFP.setImageResource(R.drawable.sanjeed);
+            holder.imageViewFlag.setImageResource(R.drawable.india32);
+        }
+        else if(fn.toLowerCase().equals("cynthia")) {
+            holder.imageViewPFP.setImageResource(R.drawable.cynthia);
+            holder.imageViewFlag.setImageResource(R.drawable.panama32);
+        }
+        else if(fn.toLowerCase().equals("james")) {
+            holder.imageViewPFP.setImageResource(R.drawable.james);
+            holder.imageViewFlag.setImageResource(R.drawable.unitedstates32);
+        }
 
         setFavoritesInSearch(currentElder, holder);
     }
