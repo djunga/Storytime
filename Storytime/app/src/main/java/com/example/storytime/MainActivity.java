@@ -24,6 +24,12 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import android.app.Notification;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
+
+import static com.example.storytime.App.CHANNEL_1_ID;
+
 public class MainActivity extends AppCompatActivity implements SearchDialog.MyListener  {
     private RecyclerView searchRV;
     private static ItemAdapter searchAdapter;
@@ -36,10 +42,15 @@ public class MainActivity extends AppCompatActivity implements SearchDialog.MyLi
     private FirebaseFirestore db;
     public ConstraintLayout constraintLayoutMain;
 
+    private NotificationManagerCompat notificationManager;
+    static boolean showNotification = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        notificationManager = NotificationManagerCompat.from(this);
 
         initSearchButton();
         initStatsButton();
@@ -58,6 +69,25 @@ public class MainActivity extends AppCompatActivity implements SearchDialog.MyLi
         searchRV.setLayoutManager(new LinearLayoutManager(this));
         searchRV.setAdapter(searchAdapter);
         firstLoad = true;
+
+        if(showNotification) {
+            sendOnChannel1();
+            showNotification = false;
+        }
+
+    }
+
+    public void sendOnChannel1() {
+        String title = "Welcome back!";
+        String message = "Press the magnifying glass to find the perfect speaker!";
+        Notification notification = new NotificationCompat.Builder(this, CHANNEL_1_ID)
+                .setSmallIcon(R.drawable.logo)
+                .setContentTitle(title)
+                .setContentText(message)
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setCategory(NotificationCompat.CATEGORY_MESSAGE)
+                .build();
+        notificationManager.notify(1, notification);
     }
 
     private void initSearchButton() {
